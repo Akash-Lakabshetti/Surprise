@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surprise Me!</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #222;
+            overflow: hidden;
+            transition: background-color 0.5s ease;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            text-align: center;
+            color: white;
+        }
+        .btn {
+            padding: 15px 30px;
+            font-size: 20px;
+            border: none;
+            background: linear-gradient(45deg, #ff0000, #ff7300, #ffeb00, #00ff00, #0000ff, #4b0082, #9400d3);
+            color: white;
+            cursor: pointer;
+            border-radius: 50px;
+            animation: pulse 1.5s infinite;
+            font-weight: bold;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        .random-box {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .surprise-text {
+            font-size: 40px;
+            font-weight: bold;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Click for a Crazy Surprise!</h1>
+        <button class="btn" onclick="handleSurprise()">Surprise Me</button>
+        <p class="surprise-text" id="surpriseText"></p>
+    </div>
+    <script>
+        function handleSurprise() {
+            let box = document.createElement('div');
+            box.classList.add('random-box');
+            document.body.appendChild(box);
+            
+            let size = Math.random() * 150 + 50;
+            box.style.width = `${size}px`;
+            box.style.height = `${size}px`;
+            box.style.backgroundColor = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+            box.style.left = `${Math.random() * window.innerWidth}px`;
+            box.style.top = `${Math.random() * window.innerHeight}px`;
+            box.style.opacity = 1;
+            
+            setTimeout(() => {
+                box.remove();
+            }, 3000);
+            
+            let surpriseText = document.getElementById("surpriseText");
+            const messages = ["Wow!", "Boom!", "Magic!", "Crazy!", "Awesome!"];
+            surpriseText.textContent = messages[Math.floor(Math.random() * messages.length)];
+            surpriseText.style.opacity = 1;
+            surpriseText.style.transform = "scale(1)";
+            
+            setTimeout(() => {
+                surpriseText.style.opacity = 0;
+                surpriseText.style.transform = "scale(0.5)";
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
